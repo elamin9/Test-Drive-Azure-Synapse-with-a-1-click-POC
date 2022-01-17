@@ -575,12 +575,11 @@
 		],
 		"parameters": {
 			"SchemaName": {
-				"type": "string",
-				"defaultValue": "tripFares"
+				"type": "string"
 			},
 			"SynapseWorkspaceName": {
 				"type": "string",
-				"defaultValue": "eld5josugaup7tsipocws1"
+				"defaultValue": "eld5josugaup7tsipoc.dfs.core.windows.net"
 			},
 			"SQLDedicatedPoolName": {
 				"type": "string",
