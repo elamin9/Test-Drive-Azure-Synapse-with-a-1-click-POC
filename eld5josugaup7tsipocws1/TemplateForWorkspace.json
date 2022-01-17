@@ -465,6 +465,121 @@
 										}
 									}
 								}
+							},
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "medallion",
+											"type": "String"
+										},
+										"sink": {
+											"name": "medallion",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "hack_license",
+											"type": "String"
+										},
+										"sink": {
+											"name": "hack_license",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "vendor_id",
+											"type": "String"
+										},
+										"sink": {
+											"name": "vendor_id",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pickup_datetime",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pickup_datetime",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "payment_type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "payment_type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "fare_amount",
+											"type": "String"
+										},
+										"sink": {
+											"name": "fare_amount",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "surcharge",
+											"type": "String"
+										},
+										"sink": {
+											"name": "surcharge",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "mta_tax",
+											"type": "String"
+										},
+										"sink": {
+											"name": "mta_tax",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "tip_amount",
+											"type": "String"
+										},
+										"sink": {
+											"name": "tip_amount",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "tolls_amount",
+											"type": "String"
+										},
+										"sink": {
+											"name": "tolls_amount",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "total_amount",
+											"type": "String"
+										},
+										"sink": {
+											"name": "total_amount",
+											"type": "String"
+										}
+									}
+								]
 							}
 						},
 						"inputs": [
@@ -506,12 +621,11 @@
 				},
 				"parameters": {
 					"SchemaName": {
-						"type": "string",
-						"defaultValue": "tripFares"
+						"type": "string"
 					},
 					"SynapseWorkspaceName": {
 						"type": "string",
-						"defaultValue": "eld5josugaup7tsipocws1"
+						"defaultValue": "eld5josugaup7tsipoc.dfs.core.windows.net"
 					},
 					"SQLDedicatedPoolName": {
 						"type": "string",
@@ -541,6 +655,7 @@
 				"[concat(variables('workspaceId'), '/datasets/faresDataSource')]",
 				"[concat(variables('workspaceId'), '/datasets/faresDataSink')]",
 				"[concat(variables('workspaceId'), '/dataflows/tripFaresDataTransformations')]",
+				"[concat(variables('workspaceId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('workspaceId'), '/datasets/azureSynapseAnalyticsSchema')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsTripsData')]",
 				"[concat(variables('workspaceId'), '/datasets/AzureSynapseAnalyticsFaresData')]",
@@ -1220,7 +1335,8 @@
 						"dataFlowProperties": {
 							"computeType": "General",
 							"coreCount": 8,
-							"timeToLive": 0
+							"timeToLive": 0,
+							"cleanup": true
 						}
 					}
 				},
@@ -1648,6 +1764,26 @@
 			"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks",
 			"apiVersion": "2019-06-01-preview",
 			"properties": {},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "eld5josugaup7tsipocws1p1",
+						"poolName": "eld5josugaup7tsipocws1p1"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
 			"dependsOn": []
 		}
 	]
