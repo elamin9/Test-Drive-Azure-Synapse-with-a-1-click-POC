@@ -424,6 +424,121 @@
 								}
 							}
 						}
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "medallion",
+									"type": "String"
+								},
+								"sink": {
+									"name": "medallion",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "hack_license",
+									"type": "String"
+								},
+								"sink": {
+									"name": "hack_license",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "vendor_id",
+									"type": "String"
+								},
+								"sink": {
+									"name": "vendor_id",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "pickup_datetime",
+									"type": "String"
+								},
+								"sink": {
+									"name": "pickup_datetime",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "payment_type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "payment_type",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "fare_amount",
+									"type": "String"
+								},
+								"sink": {
+									"name": "fare_amount",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "surcharge",
+									"type": "String"
+								},
+								"sink": {
+									"name": "surcharge",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "mta_tax",
+									"type": "String"
+								},
+								"sink": {
+									"name": "mta_tax",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "tip_amount",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tip_amount",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "tolls_amount",
+									"type": "String"
+								},
+								"sink": {
+									"name": "tolls_amount",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "total_amount",
+									"type": "String"
+								},
+								"sink": {
+									"name": "total_amount",
+									"type": "String"
+								}
+							}
+						]
 					}
 				},
 				"inputs": [
