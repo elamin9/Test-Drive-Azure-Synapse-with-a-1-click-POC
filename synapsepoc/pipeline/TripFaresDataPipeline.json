@@ -575,8 +575,7 @@
 		],
 		"parameters": {
 			"SchemaName": {
-				"type": "string",
-				"defaultValue": "tripFares"
+				"type": "string"
 			},
 			"SynapseWorkspaceName": {
 				"type": "string",
