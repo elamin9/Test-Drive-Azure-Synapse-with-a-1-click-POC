@@ -630,7 +630,8 @@
 				},
 				"parameters": {
 					"SchemaName": {
-						"type": "string"
+						"type": "string",
+						"defaultValue": "tripFares"
 					},
 					"SynapseWorkspaceName": {
 						"type": "string",
@@ -1464,7 +1465,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "28663a5b-eff7-4866-b7da-ec4da474a53a"
+						"spark.autotune.trackingId": "b20423a3-cee1-451e-a69b-3fec20911f17"
 					}
 				},
 				"metadata": {
