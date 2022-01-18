@@ -3,16 +3,20 @@
 	"properties": {
 		"parameters": {
 			"SynapseWorkspaceName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "eld5josugaup7tsipoc.dfs.core.windows.net"
 			},
 			"SQLDedicatedPoolName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "eld5josugaup7tsipocws1p1"
 			},
 			"keyVaultName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "kveld5josugaup7tsipoc"
 			},
 			"SQLLoginUsername": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "azureadmin"
 			}
 		},
 		"annotations": [],
