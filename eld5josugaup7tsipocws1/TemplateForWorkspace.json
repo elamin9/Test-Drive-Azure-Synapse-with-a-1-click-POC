@@ -634,7 +634,7 @@
 					},
 					"SynapseWorkspaceName": {
 						"type": "string",
-						"defaultValue": "eld5josugaup7tsipoc.dfs.core.windows.net"
+						"defaultValue": "eld5josugaup7tsipocws1.sql.azuresynapse.net,1433"
 					},
 					"SQLDedicatedPoolName": {
 						"type": "string",
@@ -642,7 +642,7 @@
 					},
 					"SQLLoginUsername": {
 						"type": "string",
-						"defaultValue": "eld5josugaup7tsipocws1"
+						"defaultValue": "azureadmin"
 					},
 					"KeyVaultName": {
 						"type": "string",
@@ -1464,7 +1464,7 @@
 						"spark.dynamicAllocation.enabled": "false",
 						"spark.dynamicAllocation.minExecutors": "2",
 						"spark.dynamicAllocation.maxExecutors": "2",
-						"spark.autotune.trackingId": "99f1008d-0a46-438a-b442-60d85d529b5b"
+						"spark.autotune.trackingId": "28663a5b-eff7-4866-b7da-ec4da474a53a"
 					}
 				},
 				"metadata": {
