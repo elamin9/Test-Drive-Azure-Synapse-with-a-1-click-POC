@@ -587,7 +587,7 @@
 			},
 			"SQLLoginUsername": {
 				"type": "string",
-				"defaultValue": "azureadmin"
+				"defaultValue": "eld5josugaup7tsipocws1"
 			},
 			"KeyVaultName": {
 				"type": "string",
