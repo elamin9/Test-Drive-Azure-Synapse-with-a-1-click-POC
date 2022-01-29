@@ -33,15 +33,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/ws1sparkpool1')]",
-			"type": "Microsoft.Synapse/workspaces/bigDataPools",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/TripFaresDataPipeline')]",
 			"type": "Microsoft.Synapse/workspaces/pipelines",
 			"apiVersion": "2019-06-01-preview",
@@ -1774,6 +1765,2669 @@
 						],
 						"outputs": [],
 						"execution_count": null
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/Retail_pab')]",
+			"type": "Microsoft.Synapse/workspaces/databases",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"Ddls": [
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Description": "",
+							"Name": "Retail_pab",
+							"EntityType": "DATABASE",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"Properties": {
+								"DerivedModelDBInfo": "{\"ModelDirectives\":{\"BaseModel\":{\"Name\":\"Retail\",\"Version\":\"0.1.0\"}}}",
+								"IsSyMSCDMDatabase": true
+							},
+							"Source": {
+								"Provider": "ADLS",
+								"Location": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse",
+								"Properties": {
+									"FormatType": "csv",
+									"LinkedServiceName": "eld5josugaup7tsipocws1-WorkspaceDefaultStorage"
+								}
+							}
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "Retail_pab"
+							},
+							"Name": "Customer",
+							"Description": "A customer is an individual or legal entity that has or has purchased a product or service.\n\nA potential customer is an individual or legal entity that has the desire to acquire a product or service, the financial ability to pay for that product or service and is located in a location in which the product or service can be delivered to them.\n\nThe definition of 'customer' is of critical importance for every organization.    \n\nIt is the customer that is the focus of product planning, marketing, sales, service, reporting and analytics.    Without 'customer' there would be no need for the organization to exist since its purpose is to serve the customer and profit from that interaction.\n\nThe definition of 'customer' must be consistent with how customers exist and interact with the organization in the real world.  An artificial or conceptual definition of 'customer' that is not consistent with these two objectives is doomed to fail because the data will not be consistent with the definition and employees will not accept concepts or terms that are not consistent with what they see, know and how they interact with customers on a working basis.\n\nMicrosoft defines 'customer' to meet these objectives.    When we look out into the real world we see two dominant types of customers:  human beings and legal entities.     \n\nHuman beings are obviously male and female individuals of various ages, sex, demographics and a variety of similar dimensions that describe and define them who purchase products, good and services.    \n\nLegal entities are those legally-defined entities such as corporations, partnerships, non-profit organizations, government organizations etc. that purchase products, goods and services.\n\nThis view of 'customer' is consistent with the real world and consistent with how employees view and interact with customers.\n\nOf course, that is just the start of identifying, defining and understanding each type of 'customer'.     There is a great deal of detail, complexity and related data that can be used to define each type of customer to various levels of detail and different dimensions of information.\n\nMicrosoft implements these detailed concepts and related data via two distinct business area models that expand the coverage and complexity of each type of customer:\n\n-  INDIVIDUAL CUSTOMER Business Area Model\n-  LEGAL ENTITY CUSTOMER Business Area Model\n\nNote:\nEach of the Microsoft models - enterprise, business area or data warehouse - have a representative level of detail for the appropriate type of customer, which is a 'subset' of the total data available in the associated INDIVIDUAL CUSTOMER or LEGAL ENTITY CUSTOMER business area models..   Reference either of those models to expand the coverage or level of detail in each respective data model.\n\nThe actual customer implemented in each model depends upon the dominant use of customer for that industry.     \n\nFor example, in the pharmaceutical industry the customer is a legal entity, which represents another corporation, company, government organization etc. that purchases the pharmaceutical product and then distributes that product to the end-customer, which is an individual in a retail environment or a government-distribution scheme.    \n\nFor this example, the pharmaceutical models will have the legal entity customer represented but not the individual 'end customer' since that is represented in the appropriate retail industry models, which are a different offering.     \n\nOf course, the entire set of data available for a legal entity customer is contained in the associated LEGAL ENTITY CUSTOMER Business Area Model.   Reference the LEGAL ENTITY CUSTOMER Business Area Model to incorporate additional data that may be of relevance.\n\nIn many industries both types of customers are represented since a legal entity or individual can purchase products, goods or services and enter into contracts.    For these industries, both types of customers are represented by some of the more significant or relevant data derived from the associated LEGAL ENTITY or INDIVIDUAL CUSTOMER business area models.   These models can be used to expand the scope or level of detail in any of the enterprise, business area or data warehouse models.",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "CustomerId",
+										"Description": "The unique identifier of a Customer.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "CustomerId"
+										}
+									},
+									{
+										"Name": "CustomerEstablishedDate",
+										"Description": "The date that the Customer relationship was established.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "CustomerEstablishedDate"
+										}
+									},
+									{
+										"Name": "CustomerTypeId",
+										"Description": "The unique identifier of a Customer Type.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "CustomerTypeId"
+										}
+									},
+									{
+										"Name": "ResponsibilityCenterId",
+										"Description": "The unique identifier of a Responsibility Center.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "ResponsibilityCenterId"
+										}
+									},
+									{
+										"Name": "LedgerId",
+										"Description": "The unique identifier of a Ledger.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "LedgerId"
+										}
+									},
+									{
+										"Name": "LedgerAccountNumber",
+										"Description": "The unique identifier of a Ledger Account.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 16,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "LedgerAccountNumber"
+										}
+									},
+									{
+										"Name": "CustomerNote",
+										"Description": "A note, comment or additional information regarding the Customer.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 1024,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "CustomerNote"
+										}
+									},
+									{
+										"Name": "PartyId",
+										"Description": "The unique identifier of a Party.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "PartyId"
+										}
+									},
+									{
+										"Name": "GlobalLocationNumber",
+										"Description": "The Global Location Number (GLN) is a simple tool used to uniquely identify locations. It can be used to identify physical locations such as a warehouse, legal entities, or a function / department within a legal entity. The GLN is part of the GS1 system of standards.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 13,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Customer.cdm.json/Customer",
+											"Name": "GlobalLocationNumber"
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+									"FormatType": "csv",
+									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+									"Properties": {
+										"path": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/Customer",
+										"delimiter": ",",
+										"multiLine": "false",
+										"firstRowAsHeader": "false",
+										"serialization.format": "1",
+										"escape": "\\",
+										"quote": "\"",
+										"FormatTypeSetToDatabaseDefault": false,
+										"header": "false"
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/Customer",
+									"Properties": {
+										"LinkedServiceName": "eld5josugaup7tsipocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": false
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{\"CustomerId\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"CustomerId\"},\"CustomerEstablishedDate\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"CustomerEstablishedDate\"},\"CustomerTypeId\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"CustomerTypeId\"},\"ResponsibilityCenterId\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"ResponsibilityCenterId\"},\"LedgerId\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"LedgerId\"},\"LedgerAccountNumber\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"LedgerAccountNumber\"},\"CustomerNote\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"CustomerNote\"},\"PartyId\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"PartyId\"},\"GlobalLocationNumber\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"GlobalLocationNumber\"}}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"DerivedModelEntityInfo": "{\"entityDirectives\":{\"name\":\"Customer\",\"description\":\"A customer is an individual or legal entity that has or has purchased a product or service.\\n\\nA potential customer is an individual or legal entity that has the desire to acquire a product or service, the financial ability to pay for that product or service and is located in a location in which the product or service can be delivered to them.\\n\\nThe definition of 'customer' is of critical importance for every organization.    \\n\\nIt is the customer that is the focus of product planning, marketing, sales, service, reporting and analytics.    Without 'customer' there would be no need for the organization to exist since its purpose is to serve the customer and profit from that interaction.\\n\\nThe definition of 'customer' must be consistent with how customers exist and interact with the organization in the real world.  An artificial or conceptual definition of 'customer' that is not consistent with these two objectives is doomed to fail because the data will not be consistent with the definition and employees will not accept concepts or terms that are not consistent with what they see, know and how they interact with customers on a working basis.\\n\\nMicrosoft defines 'customer' to meet these objectives.    When we look out into the real world we see two dominant types of customers:  human beings and legal entities.     \\n\\nHuman beings are obviously male and female individuals of various ages, sex, demographics and a variety of similar dimensions that describe and define them who purchase products, good and services.    \\n\\nLegal entities are those legally-defined entities such as corporations, partnerships, non-profit organizations, government organizations etc. that purchase products, goods and services.\\n\\nThis view of 'customer' is consistent with the real world and consistent with how employees view and interact with customers.\\n\\nOf course, that is just the start of identifying, defining and understanding each type of 'customer'.     There is a great deal of detail, complexity and related data that can be used to define each type of customer to various levels of detail and different dimensions of information.\\n\\nMicrosoft implements these detailed concepts and related data via two distinct business area models that expand the coverage and complexity of each type of customer:\\n\\n-  INDIVIDUAL CUSTOMER Business Area Model\\n-  LEGAL ENTITY CUSTOMER Business Area Model\\n\\nNote:\\nEach of the Microsoft models - enterprise, business area or data warehouse - have a representative level of detail for the appropriate type of customer, which is a 'subset' of the total data available in the associated INDIVIDUAL CUSTOMER or LEGAL ENTITY CUSTOMER business area models..   Reference either of those models to expand the coverage or level of detail in each respective data model.\\n\\nThe actual customer implemented in each model depends upon the dominant use of customer for that industry.     \\n\\nFor example, in the pharmaceutical industry the customer is a legal entity, which represents another corporation, company, government organization etc. that purchases the pharmaceutical product and then distributes that product to the end-customer, which is an individual in a retail environment or a government-distribution scheme.    \\n\\nFor this example, the pharmaceutical models will have the legal entity customer represented but not the individual 'end customer' since that is represented in the appropriate retail industry models, which are a different offering.     \\n\\nOf course, the entire set of data available for a legal entity customer is contained in the associated LEGAL ENTITY CUSTOMER Business Area Model.   Reference the LEGAL ENTITY CUSTOMER Business Area Model to incorporate additional data that may be of relevance.\\n\\nIn many industries both types of customers are represented since a legal entity or individual can purchase products, goods or services and enter into contracts.    For these industries, both types of customers are represented by some of the more significant or relevant data derived from the associated LEGAL ENTITY or INDIVIDUAL CUSTOMER business area models.   These models can be used to expand the scope or level of detail in any of the enterprise, business area or data warehouse models.\",\"baseEntityReference\":{\"name\":\"Customer\",\"path\":\"Customer.cdm.json/Customer\"},\"projectionInfo\":{\"attributes\":[{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"CustomerId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Customer.\",\"isNullable\":false,\"name\":\"CustomerId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"CustomerEstablishedDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date that the Customer relationship was established.\",\"isNullable\":true,\"name\":\"CustomerEstablishedDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"CustomerTypeId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Customer Type.\",\"isNullable\":true,\"name\":\"CustomerTypeId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"ResponsibilityCenterId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Responsibility Center.\",\"isNullable\":true,\"name\":\"ResponsibilityCenterId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"LedgerId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Ledger.\",\"isNullable\":true,\"name\":\"LedgerId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"LedgerAccountNumber\"},\"dataType\":\"string\",\"dataTypeLength\":16,\"description\":\"The unique identifier of a Ledger Account.\",\"isNullable\":true,\"name\":\"LedgerAccountNumber\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"CustomerNote\"},\"dataType\":\"string\",\"dataTypeLength\":1024,\"description\":\"A note, comment or additional information regarding the Customer.\",\"isNullable\":true,\"name\":\"CustomerNote\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"PartyId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Party.\",\"isNullable\":true,\"name\":\"PartyId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Customer.cdm.json/Customer\",\"name\":\"GlobalLocationNumber\"},\"dataType\":\"decimal\",\"dataTypeLength\":13,\"description\":\"The Global Location Number (GLN) is a simple tool used to uniquely identify locations. It can be used to identify physical locations such as a warehouse, legal entities, or a function / department within a legal entity. The GLN is part of the GS1 system of standards.\",\"isNullable\":true,\"scale\":0,\"name\":\"GlobalLocationNumber\"}]},\"primaryKey\":[\"CustomerId\"]}}",
+								"Description": "A customer is an individual or legal entity that has or has purchased a product or service.\n\nA potential customer is an individual or legal entity that has the desire to acquire a product or service, the financial ability to pay for that product or service and is located in a location in which the product or service can be delivered to them.\n\nThe definition of 'customer' is of critical importance for every organization.    \n\nIt is the customer that is the focus of product planning, marketing, sales, service, reporting and analytics.    Without 'customer' there would be no need for the organization to exist since its purpose is to serve the customer and profit from that interaction.\n\nThe definition of 'customer' must be consistent with how customers exist and interact with the organization in the real world.  An artificial or conceptual definition of 'customer' that is not consistent with these two objectives is doomed to fail because the data will not be consistent with the definition and employees will not accept concepts or terms that are not consistent with what they see, know and how they interact with customers on a working basis.\n\nMicrosoft defines 'customer' to meet these objectives.    When we look out into the real world we see two dominant types of customers:  human beings and legal entities.     \n\nHuman beings are obviously male and female individuals of various ages, sex, demographics and a variety of similar dimensions that describe and define them who purchase products, good and services.    \n\nLegal entities are those legally-defined entities such as corporations, partnerships, non-profit organizations, government organizations etc. that purchase products, goods and services.\n\nThis view of 'customer' is consistent with the real world and consistent with how employees view and interact with customers.\n\nOf course, that is just the start of identifying, defining and understanding each type of 'customer'.     There is a great deal of detail, complexity and related data that can be used to define each type of customer to various levels of detail and different dimensions of information.\n\nMicrosoft implements these detailed concepts and related data via two distinct business area models that expand the coverage and complexity of each type of customer:\n\n-  INDIVIDUAL CUSTOMER Business Area Model\n-  LEGAL ENTITY CUSTOMER Business Area Model\n\nNote:\nEach of the Microsoft models - enterprise, business area or data warehouse - have a representative level of detail for the appropriate type of customer, which is a 'subset' of the total data available in the associated INDIVIDUAL CUSTOMER or LEGAL ENTITY CUSTOMER business area models..   Reference either of those models to expand the coverage or level of detail in each respective data model.\n\nThe actual customer implemented in each model depends upon the dominant use of customer for that industry.     \n\nFor example, in the pharmaceutical industry the customer is a legal entity, which represents another corporation, company, government organization etc. that purchases the pharmaceutical product and then distributes that product to the end-customer, which is an individual in a retail environment or a government-distribution scheme.    \n\nFor this example, the pharmaceutical models will have the legal entity customer represented but not the individual 'end customer' since that is represented in the appropriate retail industry models, which are a different offering.     \n\nOf course, the entire set of data available for a legal entity customer is contained in the associated LEGAL ENTITY CUSTOMER Business Area Model.   Reference the LEGAL ENTITY CUSTOMER Business Area Model to incorporate additional data that may be of relevance.\n\nIn many industries both types of customers are represented since a legal entity or individual can purchase products, goods or services and enter into contracts.    For these industries, both types of customers are represented by some of the more significant or relevant data derived from the associated LEGAL ENTITY or INDIVIDUAL CUSTOMER business area models.   These models can be used to expand the scope or level of detail in any of the enterprise, business area or data warehouse models.",
+								"DisplayFolderInfo": "{\"name\":\"Customer\",\"colorCode\":\"#E3008C\"}",
+								"PrimaryKeys": "CustomerId",
+								"spark.sql.sources.provider": "csv"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "Retail_pab"
+							},
+							"Name": "Invoice",
+							"Description": "A document presented to customers for products delivered or services performed.",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "InvoiceId",
+										"Description": "The unique identifier of an Invoice.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceId"
+										}
+									},
+									{
+										"Name": "CustomerAccountId",
+										"Description": "The unique identifier of a Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "CustomerAccountId"
+										}
+									},
+									{
+										"Name": "InvoiceDate",
+										"Description": "The date that the invoice was issued.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceDate"
+										}
+									},
+									{
+										"Name": "InvoiceToName",
+										"Description": "The name of the person invoiced.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 128,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceToName"
+										}
+									},
+									{
+										"Name": "InvoiceToPartyId",
+										"Description": "The unique identifier of a Party.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceToPartyId"
+										}
+									},
+									{
+										"Name": "InvoiceToLocationId",
+										"Description": "The unique identifier of a Location.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceToLocationId"
+										}
+									},
+									{
+										"Name": "InvoiceToTelephoneNumber",
+										"Description": "The invoice-to contact telephone number.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 15,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceToTelephoneNumber"
+										}
+									},
+									{
+										"Name": "InvoiceToFaxNumber",
+										"Description": "The invoice-to contact fax number.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 15,
+											"Scale": 0,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceToFaxNumber"
+										}
+									},
+									{
+										"Name": "InvoiceToEmailAddress",
+										"Description": "The invoice-to contact email address.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 256,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceToEmailAddress"
+										}
+									},
+									{
+										"Name": "InvoiceNote",
+										"Description": "A note, comment or additional information regarding the Invoice.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 1024,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceNote"
+										}
+									},
+									{
+										"Name": "TotalInvoiceProductAmount",
+										"Description": "The invoice value amount related equal to the (number of unit products) * (unit sale price)",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "TotalInvoiceProductAmount"
+										}
+									},
+									{
+										"Name": "TotalInvoiceChargesAmount",
+										"Description": "The total amount of charges invoiced.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "TotalInvoiceChargesAmount"
+										}
+									},
+									{
+										"Name": "TotalInvoiceAdjustmentsAmount",
+										"Description": "The total amount of adjustments invoiced.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "TotalInvoiceAdjustmentsAmount"
+										}
+									},
+									{
+										"Name": "TotalInvoiceTaxesAmount",
+										"Description": "The total amount of invoiced taxes.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "TotalInvoiceTaxesAmount"
+										}
+									},
+									{
+										"Name": "TotalInvoiceAmount",
+										"Description": "The total amount invoiced.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "TotalInvoiceAmount"
+										}
+									},
+									{
+										"Name": "OrderId",
+										"Description": "The unique number that identifies an Order.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "OrderId"
+										}
+									},
+									{
+										"Name": "InvoiceModeId",
+										"Description": "The unique identifier of the Invoice Mode.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceModeId"
+										}
+									},
+									{
+										"Name": "IsoCurrencyCode",
+										"Description": "The ISO 4217 currency code.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 3,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "IsoCurrencyCode"
+										}
+									},
+									{
+										"Name": "InvoiceStatusId",
+										"Description": "The unique identifier of a Invoice Status.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "InvoiceStatusId"
+										}
+									},
+									{
+										"Name": "IsoLanguageId",
+										"Description": "The unique identifier of an ISO Language.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Invoice.cdm.json/Invoice",
+											"Name": "IsoLanguageId"
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+									"FormatType": "csv",
+									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+									"Properties": {
+										"path": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/Invoice",
+										"delimiter": ",",
+										"multiLine": "false",
+										"firstRowAsHeader": "false",
+										"serialization.format": "1",
+										"escape": "\\",
+										"quote": "\"",
+										"FormatTypeSetToDatabaseDefault": true,
+										"header": "false"
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/Invoice",
+									"Properties": {
+										"LinkedServiceName": "eld5josugaup7tsipocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{\"InvoiceId\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceId\"},\"CustomerAccountId\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"CustomerAccountId\"},\"InvoiceDate\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceDate\"},\"InvoiceToName\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToName\"},\"InvoiceToPartyId\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToPartyId\"},\"InvoiceToLocationId\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToLocationId\"},\"InvoiceToTelephoneNumber\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToTelephoneNumber\"},\"InvoiceToFaxNumber\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToFaxNumber\"},\"InvoiceToEmailAddress\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToEmailAddress\"},\"InvoiceNote\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceNote\"},\"TotalInvoiceProductAmount\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceProductAmount\"},\"TotalInvoiceChargesAmount\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceChargesAmount\"},\"TotalInvoiceAdjustmentsAmount\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceAdjustmentsAmount\"},\"TotalInvoiceTaxesAmount\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceTaxesAmount\"},\"TotalInvoiceAmount\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceAmount\"},\"OrderId\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"OrderId\"},\"InvoiceModeId\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceModeId\"},\"IsoCurrencyCode\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"IsoCurrencyCode\"},\"InvoiceStatusId\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceStatusId\"},\"IsoLanguageId\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"IsoLanguageId\"}}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"DerivedModelEntityInfo": "{\"entityDirectives\":{\"baseEntityReference\":{\"name\":\"Invoice\",\"path\":\"Invoice.cdm.json/Invoice\"},\"description\":\"A document presented to customers for products delivered or services performed.\",\"primaryKey\":[\"InvoiceId\"],\"projectionInfo\":{\"attributes\":[{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of an Invoice.\",\"isNullable\":false,\"name\":\"InvoiceId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"CustomerAccountId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Customer Account.\",\"isNullable\":true,\"name\":\"CustomerAccountId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date that the invoice was issued.\",\"isNullable\":true,\"name\":\"InvoiceDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToName\"},\"dataType\":\"string\",\"dataTypeLength\":128,\"description\":\"The name of the person invoiced.\",\"isNullable\":true,\"name\":\"InvoiceToName\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToPartyId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Party.\",\"isNullable\":true,\"name\":\"InvoiceToPartyId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToLocationId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Location.\",\"isNullable\":true,\"name\":\"InvoiceToLocationId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToTelephoneNumber\"},\"dataType\":\"decimal\",\"dataTypeLength\":15,\"description\":\"The invoice-to contact telephone number.\",\"isNullable\":true,\"scale\":0,\"name\":\"InvoiceToTelephoneNumber\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToFaxNumber\"},\"dataType\":\"decimal\",\"dataTypeLength\":15,\"description\":\"The invoice-to contact fax number.\",\"isNullable\":true,\"scale\":0,\"name\":\"InvoiceToFaxNumber\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceToEmailAddress\"},\"dataType\":\"string\",\"dataTypeLength\":256,\"description\":\"The invoice-to contact email address.\",\"isNullable\":true,\"name\":\"InvoiceToEmailAddress\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceNote\"},\"dataType\":\"string\",\"dataTypeLength\":1024,\"description\":\"A note, comment or additional information regarding the Invoice.\",\"isNullable\":true,\"name\":\"InvoiceNote\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceProductAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The invoice value amount related equal to the (number of unit products) * (unit sale price)\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalInvoiceProductAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceChargesAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount of charges invoiced.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalInvoiceChargesAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceAdjustmentsAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount of adjustments invoiced.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalInvoiceAdjustmentsAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceTaxesAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount of invoiced taxes.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalInvoiceTaxesAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"TotalInvoiceAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount invoiced.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalInvoiceAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"OrderId\"},\"dataType\":\"long\",\"description\":\"The unique number that identifies an Order.\",\"isNullable\":true,\"name\":\"OrderId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceModeId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of the Invoice Mode.\",\"isNullable\":true,\"name\":\"InvoiceModeId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"IsoCurrencyCode\"},\"dataType\":\"string\",\"dataTypeLength\":3,\"description\":\"The ISO 4217 currency code.\",\"isNullable\":true,\"name\":\"IsoCurrencyCode\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"InvoiceStatusId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Invoice Status.\",\"isNullable\":true,\"name\":\"InvoiceStatusId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Invoice.cdm.json/Invoice\",\"name\":\"IsoLanguageId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of an ISO Language.\",\"isNullable\":true,\"name\":\"IsoLanguageId\"}]}}}",
+								"Description": "A document presented to customers for products delivered or services performed.",
+								"DisplayFolderInfo": "{\"name\":\"Order\",\"colorCode\":\"#7062A8\"}",
+								"PrimaryKeys": "InvoiceId",
+								"spark.sql.sources.provider": "csv"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "Retail_pab"
+							},
+							"Name": "Order",
+							"Description": "A document or commission by the customer to order products.",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "OrderId",
+										"Description": "The unique number that identifies an Order.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderId"
+										}
+									},
+									{
+										"Name": "OrderConfirmationNumber",
+										"Description": "The order confirmation number provided to the Customer/Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 16,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderConfirmationNumber"
+										}
+									},
+									{
+										"Name": "OrderEnteredByEmployeeId",
+										"Description": "The employee ID of the employee entering the Order into the order entry system.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderEnteredByEmployeeId"
+										}
+									},
+									{
+										"Name": "NumberOfOrderLines",
+										"Description": "The number of Order Line Items associated with the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "NumberOfOrderLines"
+										}
+									},
+									{
+										"Name": "OrderReceivedTimestamp",
+										"Description": "The timestamp that the Order was received from the Customer/Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderReceivedTimestamp"
+										}
+									},
+									{
+										"Name": "OrderEntryTimestamp",
+										"Description": "The date that the Order was entered into the order entry system.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderEntryTimestamp"
+										}
+									},
+									{
+										"Name": "CustomerCreditCheckTimestamp",
+										"Description": "The timestamp that the Customer/Customer Account had a credit check in regard to the Order amount.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "CustomerCreditCheckTimestamp"
+										}
+									},
+									{
+										"Name": "OrderConfirmationTimestamp",
+										"Description": "The timestamp that the Order was confirmed to the Customer/Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderConfirmationTimestamp"
+										}
+									},
+									{
+										"Name": "OrderRequestedDeliveryDate",
+										"Description": "The date that the Customer/Customer Account requested delivery of the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderRequestedDeliveryDate"
+										}
+									},
+									{
+										"Name": "OrderCommittedDeliveryDate",
+										"Description": "The date committed to the Customer/Customer Account for delivery of the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderCommittedDeliveryDate"
+										}
+									},
+									{
+										"Name": "ShipmentConfirmationTimestamp",
+										"Description": "The timestamp that confirmation of the Shipment was made to the Customer/Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ShipmentConfirmationTimestamp"
+										}
+									},
+									{
+										"Name": "OrderActualDeliveryTimestamp",
+										"Description": "The actual timestamp of delivery of the Order to the Customer/Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderActualDeliveryTimestamp"
+										}
+									},
+									{
+										"Name": "OrderTotalRetailPriceAmount",
+										"Description": "The total list price value of the ordered products = (list price per unit product price)x(quantity ordered) for each line item.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderTotalRetailPriceAmount"
+										}
+									},
+									{
+										"Name": "OrderTotalActualSalesPriceAmount",
+										"Description": "The total actual price value of the ordered products = (actual selling price per unit product price)x(quantity ordered) for each line item.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderTotalActualSalesPriceAmount"
+										}
+									},
+									{
+										"Name": "OrderTotalAdjustmentPercentage",
+										"Description": "The total percentage of adjustment applied to the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 8,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderTotalAdjustmentPercentage"
+										}
+									},
+									{
+										"Name": "OrderTotalAdjustmentAmount",
+										"Description": "The total amount of adjustment applied to the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderTotalAdjustmentAmount"
+										}
+									},
+									{
+										"Name": "OrderTotalAmount",
+										"Description": "The total value of the Order including Adjustment(s).",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderTotalAmount"
+										}
+									},
+									{
+										"Name": "TotalShippingChargeAmount",
+										"Description": "The total amount of shipping charge associated with the order.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "TotalShippingChargeAmount"
+										}
+									},
+									{
+										"Name": "OrderTotalTaxAmount",
+										"Description": "The total amount of all taxes applied to the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderTotalTaxAmount"
+										}
+									},
+									{
+										"Name": "OrderTotalInvoicedAmount",
+										"Description": "The total invoiced amount to the Customer/Customer Account = (per units selling price of products)x(quantity purchased) for all line items + all discounts + all rebates + adjustments/credits + taxes",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderTotalInvoicedAmount"
+										}
+									},
+									{
+										"Name": "TotalGratuityAmount",
+										"Description": "The total amount of gratuity paid.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "TotalGratuityAmount"
+										}
+									},
+									{
+										"Name": "TotalPaidAmount",
+										"Description": "The total amount including gratuity.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "TotalPaidAmount"
+										}
+									},
+									{
+										"Name": "TotalCommissionsPayableAmount",
+										"Description": "The total amount of commissions payable and due in regard to the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "TotalCommissionsPayableAmount"
+										}
+									},
+									{
+										"Name": "SplitCommissionsIndicator",
+										"Description": "Indicates that the commissions are to be split between two or more employees.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "SplitCommissionsIndicator"
+										}
+									},
+									{
+										"Name": "OrderBookedDate",
+										"Description": "The date signifying that the order has all the needed information to be considered a firm order and to be processed.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderBookedDate"
+										}
+									},
+									{
+										"Name": "OrderBilledDate",
+										"Description": "The date that the Order was billed.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderBilledDate"
+										}
+									},
+									{
+										"Name": "OrderBacklogReportedDate",
+										"Description": "The date that the Order backlog was reported.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderBacklogReportedDate"
+										}
+									},
+									{
+										"Name": "OrderBacklogReleasedDate",
+										"Description": "The date that the Order backlog was released/fulfilled.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderBacklogReleasedDate"
+										}
+									},
+									{
+										"Name": "OrderCancellationDate",
+										"Description": "The date that the Order was cancelled.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderCancellationDate"
+										}
+									},
+									{
+										"Name": "OrderReturnedDate",
+										"Description": "The date that the Order was returned.",
+										"OriginDataTypeName": {
+											"TypeName": "date",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"DateFormat": "YYYY-MM-DD",
+												"HIVE_TYPE_STRING": "date"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderReturnedDate"
+										}
+									},
+									{
+										"Name": "ShipmentToName",
+										"Description": "The name of the ship-to party.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 128,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ShipmentToName"
+										}
+									},
+									{
+										"Name": "ShipmentToLocationId",
+										"Description": "The unique identifier of a Location.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ShipmentToLocationId"
+										}
+									},
+									{
+										"Name": "ShipmentId",
+										"Description": "The unique identifier of a Shipment.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ShipmentId"
+										}
+									},
+									{
+										"Name": "CarrierId",
+										"Description": "The unique identifier of a Carrier.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "CarrierId"
+										}
+									},
+									{
+										"Name": "ShipmentMethodId",
+										"Description": "The unique identifier of a Shipment Method.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ShipmentMethodId"
+										}
+									},
+									{
+										"Name": "RequestedShipmentCarrierName",
+										"Description": "The name of the Carrier for the Shipment requested by the Customer/Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 128,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "RequestedShipmentCarrierName"
+										}
+									},
+									{
+										"Name": "AlternateCarrierAcceptableIndicator",
+										"Description": "Indicates that an alternate Carrier of the Shipment would be acceptable to the Customer/Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "AlternateCarrierAcceptableIndicator"
+										}
+									},
+									{
+										"Name": "ActualShipmentCarrierName",
+										"Description": "The Carrier of the Shipment.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 128,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ActualShipmentCarrierName"
+										}
+									},
+									{
+										"Name": "ShipOrderCompleteIndicator",
+										"Description": "Indicates that the Order is only to be shipped when complete - no partial shipments.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ShipOrderCompleteIndicator"
+										}
+									},
+									{
+										"Name": "TotalOrderWeight",
+										"Description": "The total weight of the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 8,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "TotalOrderWeight"
+										}
+									},
+									{
+										"Name": "WeightUomId",
+										"Description": "The unique identifier of a Unit Of Measure.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "WeightUomId"
+										}
+									},
+									{
+										"Name": "TotalOrderFreightChargeAmount",
+										"Description": "The total order freight charges amount.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "TotalOrderFreightChargeAmount"
+										}
+									},
+									{
+										"Name": "EarliestDeliveryWindowTimestamp",
+										"Description": "The earliest timestamp that the order should be made available for delivery.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "EarliestDeliveryWindowTimestamp"
+										}
+									},
+									{
+										"Name": "LatestDeliveryWindowTimestamp",
+										"Description": "The latest timestamp that the order should be made available for delivery.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "LatestDeliveryWindowTimestamp"
+										}
+									},
+									{
+										"Name": "AcknowledgementRequiredIndicator",
+										"Description": "Indicates that an acknowledgement  to the Customer/Customer Account is required for the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "AcknowledgementRequiredIndicator"
+										}
+									},
+									{
+										"Name": "ExpediteOrderIndicator",
+										"Description": "Indicates that the Order is to be expedited.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ExpediteOrderIndicator"
+										}
+									},
+									{
+										"Name": "DropShipmentIndicator",
+										"Description": "Indicates that the Order is to be drop shipped.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "DropShipmentIndicator"
+										}
+									},
+									{
+										"Name": "ServiceOrderIndicator",
+										"Description": "Indicates that the Order is for Service Products.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ServiceOrderIndicator"
+										}
+									},
+									{
+										"Name": "ProductOrderIndicator",
+										"Description": "Indicates that the Order is for Products.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ProductOrderIndicator"
+										}
+									},
+									{
+										"Name": "OrderDeliveryInstructions",
+										"Description": "Instructions related to the delivery of the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 2048,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderDeliveryInstructions"
+										}
+									},
+									{
+										"Name": "CustomerCreditCheckNote",
+										"Description": "A note, comment or additional information regarding the Order credit check.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 1024,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "CustomerCreditCheckNote"
+										}
+									},
+									{
+										"Name": "MessageToCustomer",
+										"Description": "A message to the Customer/Customer Account regarding the Order.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 2048,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "MessageToCustomer"
+										}
+									},
+									{
+										"Name": "CustomerId",
+										"Description": "The unique identifier of a Customer.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "CustomerId"
+										}
+									},
+									{
+										"Name": "CustomerAccountId",
+										"Description": "The unique identifier of a Customer Account.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "CustomerAccountId"
+										}
+									},
+									{
+										"Name": "WarehouseId",
+										"Description": "The unique identifier of a Warehouse.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "WarehouseId"
+										}
+									},
+									{
+										"Name": "StoreId",
+										"Description": "The unique identifier of a Store.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "StoreId"
+										}
+									},
+									{
+										"Name": "CustomerIdentificationMethodId",
+										"Description": "The unique identifier of a customer identification method.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "CustomerIdentificationMethodId"
+										}
+									},
+									{
+										"Name": "PoNumber",
+										"Description": "The unique identifier of a Purchase Order.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 18,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "PoNumber"
+										}
+									},
+									{
+										"Name": "MarketingEventId",
+										"Description": "The unique identifier of a Marketing Event.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "MarketingEventId"
+										}
+									},
+									{
+										"Name": "AdvertisingEventId",
+										"Description": "The unique identifier of an Advertising Event.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "AdvertisingEventId"
+										}
+									},
+									{
+										"Name": "SalesMethodId",
+										"Description": "The unique identifier of a Sales Method.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "SalesMethodId"
+										}
+									},
+									{
+										"Name": "PaymentMethodId",
+										"Description": "The unique identifier of a Payment Method.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "PaymentMethodId"
+										}
+									},
+									{
+										"Name": "BillingCycleId",
+										"Description": "The unique identifier of a Billing Cycle.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "BillingCycleId"
+										}
+									},
+									{
+										"Name": "ContractId",
+										"Description": "The unique identifier of a Contract.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ContractId"
+										}
+									},
+									{
+										"Name": "SalesChannelId",
+										"Description": "The unique identifier of a Channel.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "SalesChannelId"
+										}
+									},
+									{
+										"Name": "DistributionChannelId",
+										"Description": "The unique identifier of a Channel.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "DistributionChannelId"
+										}
+									},
+									{
+										"Name": "OrderTypeId",
+										"Description": "The unique identifier of an Order Type.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderTypeId"
+										}
+									},
+									{
+										"Name": "OrderClassificationId",
+										"Description": "The unique identifier of an Order Classification.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderClassificationId"
+										}
+									},
+									{
+										"Name": "RejectionReasonId",
+										"Description": "The unique identifier of a Rejection Reason.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "RejectionReasonId"
+										}
+									},
+									{
+										"Name": "OrderProcessingStatusId",
+										"Description": "The unique identifier of an Order Processing Status.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "OrderProcessingStatusId"
+										}
+									},
+									{
+										"Name": "IsoCurrencyCode",
+										"Description": "The ISO 4217 currency code.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 3,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "IsoCurrencyCode"
+										}
+									},
+									{
+										"Name": "PointOfSaleId",
+										"Description": "The unique identifier of a Point-Of-Sale.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "PointOfSaleId"
+										}
+									},
+									{
+										"Name": "ResponsibilityCenterId",
+										"Description": "The unique identifier of a Responsibility Center.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "ResponsibilityCenterId"
+										}
+									},
+									{
+										"Name": "VendorId",
+										"Description": "The unique identifier of a Vendor.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "VendorId"
+										}
+									},
+									{
+										"Name": "DeviceId",
+										"Description": "The unique identifier of a Device.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "DeviceId"
+										}
+									},
+									{
+										"Name": "SoftwareProductId",
+										"Description": "The unique identifier of a software product.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "SoftwareProductId"
+										}
+									},
+									{
+										"Name": "SoftwareProductVersionNumber",
+										"Description": "The version number of the software product.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "SoftwareProductVersionNumber"
+										}
+									},
+									{
+										"Name": "PromotionOfferId",
+										"Description": "The unique identifier of a Promotion Offer. The Promotion Offer ID is unique to each account or party that is offered to.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Order.cdm.json/Order",
+											"Name": "PromotionOfferId"
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+									"FormatType": "csv",
+									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+									"Properties": {
+										"path": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/Order",
+										"delimiter": ",",
+										"multiLine": "false",
+										"firstRowAsHeader": "false",
+										"serialization.format": "1",
+										"escape": "\\",
+										"quote": "\"",
+										"FormatTypeSetToDatabaseDefault": true,
+										"header": "false"
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/Order",
+									"Properties": {
+										"LinkedServiceName": "eld5josugaup7tsipocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{\"OrderId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderId\"},\"OrderConfirmationNumber\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderConfirmationNumber\"},\"OrderEnteredByEmployeeId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderEnteredByEmployeeId\"},\"NumberOfOrderLines\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"NumberOfOrderLines\"},\"OrderReceivedTimestamp\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderReceivedTimestamp\"},\"OrderEntryTimestamp\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderEntryTimestamp\"},\"CustomerCreditCheckTimestamp\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerCreditCheckTimestamp\"},\"OrderConfirmationTimestamp\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderConfirmationTimestamp\"},\"OrderRequestedDeliveryDate\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderRequestedDeliveryDate\"},\"OrderCommittedDeliveryDate\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderCommittedDeliveryDate\"},\"ShipmentConfirmationTimestamp\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentConfirmationTimestamp\"},\"OrderActualDeliveryTimestamp\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderActualDeliveryTimestamp\"},\"OrderTotalRetailPriceAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalRetailPriceAmount\"},\"OrderTotalActualSalesPriceAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalActualSalesPriceAmount\"},\"OrderTotalAdjustmentPercentage\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalAdjustmentPercentage\"},\"OrderTotalAdjustmentAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalAdjustmentAmount\"},\"OrderTotalAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalAmount\"},\"TotalShippingChargeAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalShippingChargeAmount\"},\"OrderTotalTaxAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalTaxAmount\"},\"OrderTotalInvoicedAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalInvoicedAmount\"},\"TotalGratuityAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalGratuityAmount\"},\"TotalPaidAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalPaidAmount\"},\"TotalCommissionsPayableAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalCommissionsPayableAmount\"},\"SplitCommissionsIndicator\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SplitCommissionsIndicator\"},\"OrderBookedDate\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderBookedDate\"},\"OrderBilledDate\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderBilledDate\"},\"OrderBacklogReportedDate\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderBacklogReportedDate\"},\"OrderBacklogReleasedDate\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderBacklogReleasedDate\"},\"OrderCancellationDate\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderCancellationDate\"},\"OrderReturnedDate\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderReturnedDate\"},\"ShipmentToName\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentToName\"},\"ShipmentToLocationId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentToLocationId\"},\"ShipmentId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentId\"},\"CarrierId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CarrierId\"},\"ShipmentMethodId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentMethodId\"},\"RequestedShipmentCarrierName\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"RequestedShipmentCarrierName\"},\"AlternateCarrierAcceptableIndicator\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"AlternateCarrierAcceptableIndicator\"},\"ActualShipmentCarrierName\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ActualShipmentCarrierName\"},\"ShipOrderCompleteIndicator\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipOrderCompleteIndicator\"},\"TotalOrderWeight\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalOrderWeight\"},\"WeightUomId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"WeightUomId\"},\"TotalOrderFreightChargeAmount\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalOrderFreightChargeAmount\"},\"EarliestDeliveryWindowTimestamp\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"EarliestDeliveryWindowTimestamp\"},\"LatestDeliveryWindowTimestamp\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"LatestDeliveryWindowTimestamp\"},\"AcknowledgementRequiredIndicator\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"AcknowledgementRequiredIndicator\"},\"ExpediteOrderIndicator\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ExpediteOrderIndicator\"},\"DropShipmentIndicator\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"DropShipmentIndicator\"},\"ServiceOrderIndicator\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ServiceOrderIndicator\"},\"ProductOrderIndicator\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ProductOrderIndicator\"},\"OrderDeliveryInstructions\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderDeliveryInstructions\"},\"CustomerCreditCheckNote\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerCreditCheckNote\"},\"MessageToCustomer\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"MessageToCustomer\"},\"CustomerId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerId\"},\"CustomerAccountId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerAccountId\"},\"WarehouseId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"WarehouseId\"},\"StoreId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"StoreId\"},\"CustomerIdentificationMethodId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerIdentificationMethodId\"},\"PoNumber\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"PoNumber\"},\"MarketingEventId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"MarketingEventId\"},\"AdvertisingEventId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"AdvertisingEventId\"},\"SalesMethodId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SalesMethodId\"},\"PaymentMethodId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"PaymentMethodId\"},\"BillingCycleId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"BillingCycleId\"},\"ContractId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ContractId\"},\"SalesChannelId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SalesChannelId\"},\"DistributionChannelId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"DistributionChannelId\"},\"OrderTypeId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTypeId\"},\"OrderClassificationId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderClassificationId\"},\"RejectionReasonId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"RejectionReasonId\"},\"OrderProcessingStatusId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderProcessingStatusId\"},\"IsoCurrencyCode\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"IsoCurrencyCode\"},\"PointOfSaleId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"PointOfSaleId\"},\"ResponsibilityCenterId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ResponsibilityCenterId\"},\"VendorId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"VendorId\"},\"DeviceId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"DeviceId\"},\"SoftwareProductId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SoftwareProductId\"},\"SoftwareProductVersionNumber\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SoftwareProductVersionNumber\"},\"PromotionOfferId\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"PromotionOfferId\"}}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"DerivedModelEntityInfo": "{\"entityDirectives\":{\"baseEntityReference\":{\"name\":\"Order\",\"path\":\"Order.cdm.json/Order\"},\"description\":\"A document or commission by the customer to order products.\",\"primaryKey\":[\"OrderId\"],\"projectionInfo\":{\"attributes\":[{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderId\"},\"dataType\":\"long\",\"description\":\"The unique number that identifies an Order.\",\"isNullable\":false,\"name\":\"OrderId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderConfirmationNumber\"},\"dataType\":\"string\",\"dataTypeLength\":16,\"description\":\"The order confirmation number provided to the Customer/Customer Account.\",\"isNullable\":true,\"name\":\"OrderConfirmationNumber\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderEnteredByEmployeeId\"},\"dataType\":\"integer\",\"description\":\"The employee ID of the employee entering the Order into the order entry system.\",\"isNullable\":true,\"name\":\"OrderEnteredByEmployeeId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"NumberOfOrderLines\"},\"dataType\":\"integer\",\"description\":\"The number of Order Line Items associated with the Order.\",\"isNullable\":true,\"name\":\"NumberOfOrderLines\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderReceivedTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The timestamp that the Order was received from the Customer/Customer Account.\",\"isNullable\":true,\"name\":\"OrderReceivedTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderEntryTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The date that the Order was entered into the order entry system.\",\"isNullable\":true,\"name\":\"OrderEntryTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerCreditCheckTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The timestamp that the Customer/Customer Account had a credit check in regard to the Order amount.\",\"isNullable\":true,\"name\":\"CustomerCreditCheckTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderConfirmationTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The timestamp that the Order was confirmed to the Customer/Customer Account.\",\"isNullable\":true,\"name\":\"OrderConfirmationTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderRequestedDeliveryDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date that the Customer/Customer Account requested delivery of the Order.\",\"isNullable\":true,\"name\":\"OrderRequestedDeliveryDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderCommittedDeliveryDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date committed to the Customer/Customer Account for delivery of the Order.\",\"isNullable\":true,\"name\":\"OrderCommittedDeliveryDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentConfirmationTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The timestamp that confirmation of the Shipment was made to the Customer/Customer Account.\",\"isNullable\":true,\"name\":\"ShipmentConfirmationTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderActualDeliveryTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The actual timestamp of delivery of the Order to the Customer/Customer Account.\",\"isNullable\":true,\"name\":\"OrderActualDeliveryTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalRetailPriceAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total list price value of the ordered products = (list price per unit product price)x(quantity ordered) for each line item.\",\"isNullable\":true,\"scale\":2,\"name\":\"OrderTotalRetailPriceAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalActualSalesPriceAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total actual price value of the ordered products = (actual selling price per unit product price)x(quantity ordered) for each line item.\",\"isNullable\":true,\"scale\":2,\"name\":\"OrderTotalActualSalesPriceAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalAdjustmentPercentage\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total percentage of adjustment applied to the Order.\",\"isNullable\":true,\"scale\":8,\"name\":\"OrderTotalAdjustmentPercentage\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalAdjustmentAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount of adjustment applied to the Order.\",\"isNullable\":true,\"scale\":2,\"name\":\"OrderTotalAdjustmentAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total value of the Order including Adjustment(s).\",\"isNullable\":true,\"scale\":2,\"name\":\"OrderTotalAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalShippingChargeAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount of shipping charge associated with the order.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalShippingChargeAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalTaxAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount of all taxes applied to the Order.\",\"isNullable\":true,\"scale\":2,\"name\":\"OrderTotalTaxAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTotalInvoicedAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total invoiced amount to the Customer/Customer Account = (per units selling price of products)x(quantity purchased) for all line items + all discounts + all rebates + adjustments/credits + taxes\",\"isNullable\":true,\"scale\":2,\"name\":\"OrderTotalInvoicedAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalGratuityAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount of gratuity paid.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalGratuityAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalPaidAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount including gratuity.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalPaidAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalCommissionsPayableAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total amount of commissions payable and due in regard to the Order.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalCommissionsPayableAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SplitCommissionsIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates that the commissions are to be split between two or more employees.\",\"isNullable\":true,\"name\":\"SplitCommissionsIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderBookedDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date signifying that the order has all the needed information to be considered a firm order and to be processed.\",\"isNullable\":true,\"name\":\"OrderBookedDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderBilledDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date that the Order was billed.\",\"isNullable\":true,\"name\":\"OrderBilledDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderBacklogReportedDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date that the Order backlog was reported.\",\"isNullable\":true,\"name\":\"OrderBacklogReportedDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderBacklogReleasedDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date that the Order backlog was released/fulfilled.\",\"isNullable\":true,\"name\":\"OrderBacklogReleasedDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderCancellationDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date that the Order was cancelled.\",\"isNullable\":true,\"name\":\"OrderCancellationDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderReturnedDate\"},\"dataType\":\"date\",\"dateFormat\":\"YYYY-MM-DD\",\"description\":\"The date that the Order was returned.\",\"isNullable\":true,\"name\":\"OrderReturnedDate\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentToName\"},\"dataType\":\"string\",\"dataTypeLength\":128,\"description\":\"The name of the ship-to party.\",\"isNullable\":true,\"name\":\"ShipmentToName\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentToLocationId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Location.\",\"isNullable\":true,\"name\":\"ShipmentToLocationId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Shipment.\",\"isNullable\":true,\"name\":\"ShipmentId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CarrierId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Carrier.\",\"isNullable\":true,\"name\":\"CarrierId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipmentMethodId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Shipment Method.\",\"isNullable\":true,\"name\":\"ShipmentMethodId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"RequestedShipmentCarrierName\"},\"dataType\":\"string\",\"dataTypeLength\":128,\"description\":\"The name of the Carrier for the Shipment requested by the Customer/Customer Account.\",\"isNullable\":true,\"name\":\"RequestedShipmentCarrierName\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"AlternateCarrierAcceptableIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates that an alternate Carrier of the Shipment would be acceptable to the Customer/Customer Account.\",\"isNullable\":true,\"name\":\"AlternateCarrierAcceptableIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ActualShipmentCarrierName\"},\"dataType\":\"string\",\"dataTypeLength\":128,\"description\":\"The Carrier of the Shipment.\",\"isNullable\":true,\"name\":\"ActualShipmentCarrierName\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ShipOrderCompleteIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates that the Order is only to be shipped when complete - no partial shipments.\",\"isNullable\":true,\"name\":\"ShipOrderCompleteIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalOrderWeight\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total weight of the Order.\",\"isNullable\":true,\"scale\":8,\"name\":\"TotalOrderWeight\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"WeightUomId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Unit Of Measure.\",\"isNullable\":true,\"name\":\"WeightUomId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"TotalOrderFreightChargeAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The total order freight charges amount.\",\"isNullable\":true,\"scale\":2,\"name\":\"TotalOrderFreightChargeAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"EarliestDeliveryWindowTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The earliest timestamp that the order should be made available for delivery.\",\"isNullable\":true,\"name\":\"EarliestDeliveryWindowTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"LatestDeliveryWindowTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The latest timestamp that the order should be made available for delivery.\",\"isNullable\":true,\"name\":\"LatestDeliveryWindowTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"AcknowledgementRequiredIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates that an acknowledgement  to the Customer/Customer Account is required for the Order.\",\"isNullable\":true,\"name\":\"AcknowledgementRequiredIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ExpediteOrderIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates that the Order is to be expedited.\",\"isNullable\":true,\"name\":\"ExpediteOrderIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"DropShipmentIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates that the Order is to be drop shipped.\",\"isNullable\":true,\"name\":\"DropShipmentIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ServiceOrderIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates that the Order is for Service Products.\",\"isNullable\":true,\"name\":\"ServiceOrderIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ProductOrderIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates that the Order is for Products.\",\"isNullable\":true,\"name\":\"ProductOrderIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderDeliveryInstructions\"},\"dataType\":\"string\",\"dataTypeLength\":2048,\"description\":\"Instructions related to the delivery of the Order.\",\"isNullable\":true,\"name\":\"OrderDeliveryInstructions\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerCreditCheckNote\"},\"dataType\":\"string\",\"dataTypeLength\":1024,\"description\":\"A note, comment or additional information regarding the Order credit check.\",\"isNullable\":true,\"name\":\"CustomerCreditCheckNote\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"MessageToCustomer\"},\"dataType\":\"string\",\"dataTypeLength\":2048,\"description\":\"A message to the Customer/Customer Account regarding the Order.\",\"isNullable\":true,\"name\":\"MessageToCustomer\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Customer.\",\"isNullable\":true,\"name\":\"CustomerId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerAccountId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Customer Account.\",\"isNullable\":true,\"name\":\"CustomerAccountId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"WarehouseId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Warehouse.\",\"isNullable\":true,\"name\":\"WarehouseId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"StoreId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Store.\",\"isNullable\":true,\"name\":\"StoreId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"CustomerIdentificationMethodId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a customer identification method.\",\"isNullable\":true,\"name\":\"CustomerIdentificationMethodId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"PoNumber\"},\"dataType\":\"string\",\"dataTypeLength\":18,\"description\":\"The unique identifier of a Purchase Order.\",\"isNullable\":true,\"name\":\"PoNumber\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"MarketingEventId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Marketing Event.\",\"isNullable\":true,\"name\":\"MarketingEventId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"AdvertisingEventId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of an Advertising Event.\",\"isNullable\":true,\"name\":\"AdvertisingEventId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SalesMethodId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Sales Method.\",\"isNullable\":true,\"name\":\"SalesMethodId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"PaymentMethodId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Payment Method.\",\"isNullable\":true,\"name\":\"PaymentMethodId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"BillingCycleId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Billing Cycle.\",\"isNullable\":true,\"name\":\"BillingCycleId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ContractId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Contract.\",\"isNullable\":true,\"name\":\"ContractId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SalesChannelId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Channel.\",\"isNullable\":true,\"name\":\"SalesChannelId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"DistributionChannelId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Channel.\",\"isNullable\":true,\"name\":\"DistributionChannelId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderTypeId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of an Order Type.\",\"isNullable\":true,\"name\":\"OrderTypeId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderClassificationId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of an Order Classification.\",\"isNullable\":true,\"name\":\"OrderClassificationId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"RejectionReasonId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Rejection Reason.\",\"isNullable\":true,\"name\":\"RejectionReasonId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"OrderProcessingStatusId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of an Order Processing Status.\",\"isNullable\":true,\"name\":\"OrderProcessingStatusId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"IsoCurrencyCode\"},\"dataType\":\"string\",\"dataTypeLength\":3,\"description\":\"The ISO 4217 currency code.\",\"isNullable\":true,\"name\":\"IsoCurrencyCode\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"PointOfSaleId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Point-Of-Sale.\",\"isNullable\":true,\"name\":\"PointOfSaleId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"ResponsibilityCenterId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Responsibility Center.\",\"isNullable\":true,\"name\":\"ResponsibilityCenterId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"VendorId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Vendor.\",\"isNullable\":true,\"name\":\"VendorId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"DeviceId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Device.\",\"isNullable\":true,\"name\":\"DeviceId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SoftwareProductId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a software product.\",\"isNullable\":true,\"name\":\"SoftwareProductId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"SoftwareProductVersionNumber\"},\"dataType\":\"integer\",\"description\":\"The version number of the software product.\",\"isNullable\":true,\"name\":\"SoftwareProductVersionNumber\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Order.cdm.json/Order\",\"name\":\"PromotionOfferId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Promotion Offer. The Promotion Offer ID is unique to each account or party that is offered to.\",\"isNullable\":true,\"name\":\"PromotionOfferId\"}]}}}",
+								"Description": "A document or commission by the customer to order products.",
+								"DisplayFolderInfo": "{\"name\":\"Order\",\"colorCode\":\"#7062A8\"}",
+								"PrimaryKeys": "OrderId",
+								"spark.sql.sources.provider": "csv"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "Retail_pab"
+							},
+							"Name": "Payment",
+							"Description": "A payment made towards an outstanding premium or invoice.",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "PaymentId",
+										"Description": "The unique identifier of a Payment.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentId"
+										}
+									},
+									{
+										"Name": "PaymentTimestamp",
+										"Description": "The timestamp of the payment.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentTimestamp"
+										}
+									},
+									{
+										"Name": "PaymentAmount",
+										"Description": "The amount of the payment.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentAmount"
+										}
+									},
+									{
+										"Name": "ForeignCurrencyAmount",
+										"Description": "The amount in foreign currency received. The Convert-From Currency.",
+										"OriginDataTypeName": {
+											"TypeName": "decimal",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Precision": 18,
+											"Scale": 2,
+											"Properties": {
+												"HIVE_TYPE_STRING": "decimal"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "ForeignCurrencyAmount"
+										}
+									},
+									{
+										"Name": "PaymentCardAuthorizationCode",
+										"Description": "An Authorization Code is generally a five or six character code sent by the issuing bank indicated at the end of either a Successful Sales Transaction Response or a Declined Sales Transaction Response in the course of a typical merchant credit card transaction.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 16,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentCardAuthorizationCode"
+										}
+									},
+									{
+										"Name": "PaymentNote",
+										"Description": "A note, comment or additional information regarding the payment.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 1024,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentNote"
+										}
+									},
+									{
+										"Name": "PartialPaymentIndicator",
+										"Description": "Indicates a partial payment.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PartialPaymentIndicator"
+										}
+									},
+									{
+										"Name": "FullPaymentIndicator",
+										"Description": "Indicates a full payment.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "FullPaymentIndicator"
+										}
+									},
+									{
+										"Name": "PaymentStatusTypeId",
+										"Description": "The unique identifier of a Payment Status Type.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentStatusTypeId"
+										}
+									},
+									{
+										"Name": "PaymentMethodId",
+										"Description": "The unique identifier of a Payment Method.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentMethodId"
+										}
+									},
+									{
+										"Name": "GiftCardId",
+										"Description": "The unique identifier of a Gift Card.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "GiftCardId"
+										}
+									},
+									{
+										"Name": "LoyaltyCardId",
+										"Description": "The unique identifier of a Loyalty Card.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "LoyaltyCardId"
+										}
+									},
+									{
+										"Name": "ConvertFromIsoCurrencyCode",
+										"Description": "The ISO 4217 currency code.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 3,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "ConvertFromIsoCurrencyCode"
+										}
+									},
+									{
+										"Name": "ConvertToIsoCurrencyCode",
+										"Description": "The ISO 4217 currency code.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 3,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "ConvertToIsoCurrencyCode"
+										}
+									},
+									{
+										"Name": "ExchangeRateTypeId",
+										"Description": "The unique identifier of a Exchange Rate Type.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "ExchangeRateTypeId"
+										}
+									},
+									{
+										"Name": "CurrencyConversionTimestamp",
+										"Description": "The timestamp for which the currency conversion is provided.",
+										"OriginDataTypeName": {
+											"TypeName": "timestamp",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"TimestampFormat": "YYYY-MM-DD HH:MM:SS.fffffffff",
+												"HIVE_TYPE_STRING": "timestamp"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "CurrencyConversionTimestamp"
+										}
+									},
+									{
+										"Name": "PartyId",
+										"Description": "The unique identifier of a Party.",
+										"OriginDataTypeName": {
+											"TypeName": "long",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "long"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PartyId"
+										}
+									},
+									{
+										"Name": "PosDeviceId",
+										"Description": "The unique identifier of a POS Device.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PosDeviceId"
+										}
+									},
+									{
+										"Name": "BankAccountId",
+										"Description": "The unique identifier of a Bank Account.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "BankAccountId"
+										}
+									},
+									{
+										"Name": "PaymentCardId",
+										"Description": "The unique identifier of a Payment Card.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentCardId"
+										}
+									},
+									{
+										"Name": "PaymentCardAcquisitionMethodId",
+										"Description": "The unique identifier of a Payment Card Acquisition Method.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "Payment.cdm.json/Payment",
+											"Name": "PaymentCardAcquisitionMethodId"
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+									"FormatType": "csv",
+									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+									"Properties": {
+										"path": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/Payment",
+										"delimiter": ",",
+										"multiLine": "false",
+										"firstRowAsHeader": "false",
+										"serialization.format": "1",
+										"escape": "\\",
+										"quote": "\"",
+										"FormatTypeSetToDatabaseDefault": true,
+										"header": "false"
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/Payment",
+									"Properties": {
+										"LinkedServiceName": "eld5josugaup7tsipocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{\"PaymentId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentId\"},\"PaymentTimestamp\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentTimestamp\"},\"PaymentAmount\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentAmount\"},\"ForeignCurrencyAmount\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"ForeignCurrencyAmount\"},\"PaymentCardAuthorizationCode\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentCardAuthorizationCode\"},\"PaymentNote\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentNote\"},\"PartialPaymentIndicator\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PartialPaymentIndicator\"},\"FullPaymentIndicator\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"FullPaymentIndicator\"},\"PaymentStatusTypeId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentStatusTypeId\"},\"PaymentMethodId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentMethodId\"},\"GiftCardId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"GiftCardId\"},\"LoyaltyCardId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"LoyaltyCardId\"},\"ConvertFromIsoCurrencyCode\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"ConvertFromIsoCurrencyCode\"},\"ConvertToIsoCurrencyCode\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"ConvertToIsoCurrencyCode\"},\"ExchangeRateTypeId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"ExchangeRateTypeId\"},\"CurrencyConversionTimestamp\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"CurrencyConversionTimestamp\"},\"PartyId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PartyId\"},\"PosDeviceId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PosDeviceId\"},\"BankAccountId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"BankAccountId\"},\"PaymentCardId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentCardId\"},\"PaymentCardAcquisitionMethodId\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentCardAcquisitionMethodId\"}}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"DerivedModelEntityInfo": "{\"entityDirectives\":{\"baseEntityReference\":{\"name\":\"Payment\",\"path\":\"Payment.cdm.json/Payment\"},\"description\":\"A payment made towards an outstanding premium or invoice.\",\"primaryKey\":[\"PaymentId\"],\"projectionInfo\":{\"attributes\":[{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Payment.\",\"isNullable\":false,\"name\":\"PaymentId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The timestamp of the payment.\",\"isNullable\":true,\"name\":\"PaymentTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The amount of the payment.\",\"isNullable\":true,\"scale\":2,\"name\":\"PaymentAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"ForeignCurrencyAmount\"},\"dataType\":\"decimal\",\"dataTypeLength\":18,\"description\":\"The amount in foreign currency received. The Convert-From Currency.\",\"isNullable\":true,\"scale\":2,\"name\":\"ForeignCurrencyAmount\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentCardAuthorizationCode\"},\"dataType\":\"string\",\"dataTypeLength\":16,\"description\":\"An Authorization Code is generally a five or six character code sent by the issuing bank indicated at the end of either a Successful Sales Transaction Response or a Declined Sales Transaction Response in the course of a typical merchant credit card transaction.\",\"isNullable\":true,\"name\":\"PaymentCardAuthorizationCode\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentNote\"},\"dataType\":\"string\",\"dataTypeLength\":1024,\"description\":\"A note, comment or additional information regarding the payment.\",\"isNullable\":true,\"name\":\"PaymentNote\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PartialPaymentIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates a partial payment.\",\"isNullable\":true,\"name\":\"PartialPaymentIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"FullPaymentIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates a full payment.\",\"isNullable\":true,\"name\":\"FullPaymentIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentStatusTypeId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Payment Status Type.\",\"isNullable\":true,\"name\":\"PaymentStatusTypeId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentMethodId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Payment Method.\",\"isNullable\":true,\"name\":\"PaymentMethodId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"GiftCardId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Gift Card.\",\"isNullable\":true,\"name\":\"GiftCardId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"LoyaltyCardId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Loyalty Card.\",\"isNullable\":true,\"name\":\"LoyaltyCardId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"ConvertFromIsoCurrencyCode\"},\"dataType\":\"string\",\"dataTypeLength\":3,\"description\":\"The ISO 4217 currency code.\",\"isNullable\":true,\"name\":\"ConvertFromIsoCurrencyCode\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"ConvertToIsoCurrencyCode\"},\"dataType\":\"string\",\"dataTypeLength\":3,\"description\":\"The ISO 4217 currency code.\",\"isNullable\":true,\"name\":\"ConvertToIsoCurrencyCode\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"ExchangeRateTypeId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Exchange Rate Type.\",\"isNullable\":true,\"name\":\"ExchangeRateTypeId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"CurrencyConversionTimestamp\"},\"dataType\":\"timestamp\",\"description\":\"The timestamp for which the currency conversion is provided.\",\"isNullable\":true,\"name\":\"CurrencyConversionTimestamp\",\"timestampFormat\":\"YYYY-MM-DD HH:MM:SS.fffffffff\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PartyId\"},\"dataType\":\"long\",\"description\":\"The unique identifier of a Party.\",\"isNullable\":true,\"name\":\"PartyId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PosDeviceId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a POS Device.\",\"isNullable\":true,\"name\":\"PosDeviceId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"BankAccountId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Bank Account.\",\"isNullable\":true,\"name\":\"BankAccountId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentCardId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Payment Card.\",\"isNullable\":true,\"name\":\"PaymentCardId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"Payment.cdm.json/Payment\",\"name\":\"PaymentCardAcquisitionMethodId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Payment Card Acquisition Method.\",\"isNullable\":true,\"name\":\"PaymentCardAcquisitionMethodId\"}]}}}",
+								"Description": "A payment made towards an outstanding premium or invoice.",
+								"DisplayFolderInfo": "{\"name\":\"Transaction\",\"colorCode\":\"#5F538F\"}",
+								"PrimaryKeys": "PaymentId",
+								"spark.sql.sources.provider": "csv"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "Retail_pab"
+							},
+							"Name": "PaymentCard",
+							"Description": "A payment card enables card holders to purchase products or services without cash and to pay for them at a later date or with the value associated with the payment card related account or it's stored value.\n\nTypically in order to qualify for this type of credit, the card holder must open an account with a bank or company, which sponsors a card. \n\nThe card holder then receives a line of credit with a specified dollar amount.   They can use the card to make purchases from participating merchants until they reach this credit limit. \n\nEvery month the sponsor provides a bill, which aggregates the card activity during the previous 30 days. Depending on the terms of the card, the customer may pay interest charges on the amount that they do not pay for on a monthly basis.  \n\nThe banks and companies that provide or sponsor payment cards profit in three ways. \n\n(1)  They make money from the interest payments charged on the unpaid balance\n\n(2)  They also can make money by charging an annual fee for the use of the card\n\n(3)  The sponsors make money by charging merchants a small percentage of income for the service of the card. This arrangement is acceptable to the merchants because they can let their customers pay by payment card instead of requiring cash. \n\nThe merchant makes arrangements to participate in a payment card program with a merchant bank, which in turn works with a card-issuing bank. The merchant bank determines what percentage of the total purchase value has to be paid by the merchant to the card-issuing bank. The amount varies depending on the volume and type of business, but in general it is between 1-2%. A percentage of that amount is kept by the merchant bank as a transaction-processing fee.",
+							"EntityType": "TABLE",
+							"TableType": "EXTERNAL",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"StorageDescriptor": {
+								"Columns": [
+									{
+										"Name": "PaymentCardId",
+										"Description": "The unique identifier of a Payment Card.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "PaymentCard.cdm.json/PaymentCard",
+											"Name": "PaymentCardId"
+										}
+									},
+									{
+										"Name": "PaymentCardToken",
+										"Description": "A token for a Payment Card is used to point to a secure (typically encrypted) location where details of the payment card information can be found.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "PaymentCard.cdm.json/PaymentCard",
+											"Name": "PaymentCardToken"
+										}
+									},
+									{
+										"Name": "PaymentCardTypeId",
+										"Description": "The unique identifier of a Payment Card Type.",
+										"OriginDataTypeName": {
+											"TypeName": "integer",
+											"IsComplexType": false,
+											"IsNullable": false,
+											"Properties": {
+												"HIVE_TYPE_STRING": "integer"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "PaymentCard.cdm.json/PaymentCard",
+											"Name": "PaymentCardTypeId"
+										}
+									},
+									{
+										"Name": "DebitCardIndicator",
+										"Description": "Indicates whether the payment card is a debit card.",
+										"OriginDataTypeName": {
+											"TypeName": "boolean",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Properties": {
+												"HIVE_TYPE_STRING": "boolean"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "PaymentCard.cdm.json/PaymentCard",
+											"Name": "DebitCardIndicator"
+										}
+									},
+									{
+										"Name": "PaymentCardNote",
+										"Description": "A note, comment or additional information regarding the Payment Card.",
+										"OriginDataTypeName": {
+											"TypeName": "string",
+											"IsComplexType": false,
+											"IsNullable": true,
+											"Length": 1024,
+											"Properties": {
+												"HIVE_TYPE_STRING": "string"
+											}
+										},
+										"BaseAttributeReference": {
+											"Entity": "PaymentCard.cdm.json/PaymentCard",
+											"Name": "PaymentCardNote"
+										}
+									}
+								],
+								"Format": {
+									"InputFormat": "org.apache.hadoop.mapred.SequenceFileInputFormat",
+									"OutputFormat": "org.apache.hadoop.hive.ql.io.HiveSequenceFileOutputFormat",
+									"FormatType": "csv",
+									"SerializeLib": "org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe",
+									"Properties": {
+										"path": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/PaymentCard",
+										"delimiter": ",",
+										"multiLine": "false",
+										"firstRowAsHeader": "false",
+										"serialization.format": "1",
+										"escape": "\\",
+										"quote": "\"",
+										"FormatTypeSetToDatabaseDefault": true,
+										"header": "false"
+									}
+								},
+								"Source": {
+									"Provider": "ADLS",
+									"Location": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse/PaymentCard",
+									"Properties": {
+										"LinkedServiceName": "eld5josugaup7tsipocws1-WorkspaceDefaultStorage",
+										"LocationSetToDatabaseDefault": true
+									}
+								},
+								"Properties": {
+									"textinputformat.record.delimiter": ",",
+									"compression": "{\"type\":\"None\",\"level\":\"optimal\"}",
+									"derivedModelAttributeInfo": "{\"attributeReferences\":{\"PaymentCardId\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"PaymentCardId\"},\"PaymentCardToken\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"PaymentCardToken\"},\"PaymentCardTypeId\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"PaymentCardTypeId\"},\"DebitCardIndicator\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"DebitCardIndicator\"},\"PaymentCardNote\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"PaymentCardNote\"}}}"
+								},
+								"Compressed": false,
+								"IsStoredAsSubdirectories": false
+							},
+							"Properties": {
+								"DerivedModelEntityInfo": "{\"entityDirectives\":{\"baseEntityReference\":{\"name\":\"PaymentCard\",\"path\":\"PaymentCard.cdm.json/PaymentCard\"},\"description\":\"A payment card enables card holders to purchase products or services without cash and to pay for them at a later date or with the value associated with the payment card related account or it's stored value.\\n\\nTypically in order to qualify for this type of credit, the card holder must open an account with a bank or company, which sponsors a card. \\n\\nThe card holder then receives a line of credit with a specified dollar amount.   They can use the card to make purchases from participating merchants until they reach this credit limit. \\n\\nEvery month the sponsor provides a bill, which aggregates the card activity during the previous 30 days. Depending on the terms of the card, the customer may pay interest charges on the amount that they do not pay for on a monthly basis.  \\n\\nThe banks and companies that provide or sponsor payment cards profit in three ways. \\n\\n(1)  They make money from the interest payments charged on the unpaid balance\\n\\n(2)  They also can make money by charging an annual fee for the use of the card\\n\\n(3)  The sponsors make money by charging merchants a small percentage of income for the service of the card. This arrangement is acceptable to the merchants because they can let their customers pay by payment card instead of requiring cash. \\n\\nThe merchant makes arrangements to participate in a payment card program with a merchant bank, which in turn works with a card-issuing bank. The merchant bank determines what percentage of the total purchase value has to be paid by the merchant to the card-issuing bank. The amount varies depending on the volume and type of business, but in general it is between 1-2%. A percentage of that amount is kept by the merchant bank as a transaction-processing fee.\",\"primaryKey\":[\"PaymentCardId\"],\"projectionInfo\":{\"attributes\":[{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"PaymentCardId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Payment Card.\",\"isNullable\":false,\"name\":\"PaymentCardId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"PaymentCardToken\"},\"dataType\":\"integer\",\"description\":\"A token for a Payment Card is used to point to a secure (typically encrypted) location where details of the payment card information can be found.\",\"isNullable\":false,\"name\":\"PaymentCardToken\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"PaymentCardTypeId\"},\"dataType\":\"integer\",\"description\":\"The unique identifier of a Payment Card Type.\",\"isNullable\":false,\"name\":\"PaymentCardTypeId\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"DebitCardIndicator\"},\"dataType\":\"boolean\",\"description\":\"Indicates whether the payment card is a debit card.\",\"isNullable\":true,\"name\":\"DebitCardIndicator\"},{\"type\":\"Existing\",\"attributeReference\":{\"entity\":\"PaymentCard.cdm.json/PaymentCard\",\"name\":\"PaymentCardNote\"},\"dataType\":\"string\",\"dataTypeLength\":1024,\"description\":\"A note, comment or additional information regarding the Payment Card.\",\"isNullable\":true,\"name\":\"PaymentCardNote\"}]}}}",
+								"Description": "A payment card enables card holders to purchase products or services without cash and to pay for them at a later date or with the value associated with the payment card related account or it's stored value.\n\nTypically in order to qualify for this type of credit, the card holder must open an account with a bank or company, which sponsors a card. \n\nThe card holder then receives a line of credit with a specified dollar amount.   They can use the card to make purchases from participating merchants until they reach this credit limit. \n\nEvery month the sponsor provides a bill, which aggregates the card activity during the previous 30 days. Depending on the terms of the card, the customer may pay interest charges on the amount that they do not pay for on a monthly basis.  \n\nThe banks and companies that provide or sponsor payment cards profit in three ways. \n\n(1)  They make money from the interest payments charged on the unpaid balance\n\n(2)  They also can make money by charging an annual fee for the use of the card\n\n(3)  The sponsors make money by charging merchants a small percentage of income for the service of the card. This arrangement is acceptable to the merchants because they can let their customers pay by payment card instead of requiring cash. \n\nThe merchant makes arrangements to participate in a payment card program with a merchant bank, which in turn works with a card-issuing bank. The merchant bank determines what percentage of the total purchase value has to be paid by the merchant to the card-issuing bank. The amount varies depending on the volume and type of business, but in general it is between 1-2%. A percentage of that amount is kept by the merchant bank as a transaction-processing fee.",
+								"DisplayFolderInfo": "{\"name\":\"Transaction\",\"colorCode\":\"#5F538F\"}",
+								"PrimaryKeys": "PaymentCardId",
+								"spark.sql.sources.provider": "csv"
+							},
+							"Retention": 0,
+							"Temporary": false,
+							"IsRewriteEnabled": false
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "Retail_pab"
+							},
+							"Name": "relationship-giyuxgyzsf",
+							"EntityType": "RELATIONSHIP",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"FromTableName": "PaymentCard",
+							"ToTableName": "Payment",
+							"ColumnRelationshipInformations": [
+								{
+									"FromColumnName": "PaymentCardId",
+									"ToColumnName": "PaymentCardId"
+								}
+							],
+							"RelationshipType": 0,
+							"Properties": {
+								"DerivedModelRelationshipInfo": "{\"baseRelationship\":{\"fromEntity\":\"PaymentCard.cdm.json/PaymentCard\",\"toEntity\":\"Payment.cdm.json/Payment\",\"joinPairs\":[{\"fromAttribute\":\"PaymentCardId\",\"toAttribute\":\"PaymentCardId\"}]}}"
+							}
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "Retail_pab"
+							},
+							"Name": "relationship-sqoqrxkhet",
+							"EntityType": "RELATIONSHIP",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"FromTableName": "Customer",
+							"ToTableName": "Order",
+							"ColumnRelationshipInformations": [
+								{
+									"FromColumnName": "CustomerId",
+									"ToColumnName": "CustomerId"
+								}
+							],
+							"RelationshipType": 0,
+							"Properties": {
+								"DerivedModelRelationshipInfo": "{\"baseRelationship\":{\"fromEntity\":\"Customer.cdm.json/Customer\",\"toEntity\":\"Order.cdm.json/Order\",\"joinPairs\":[{\"fromAttribute\":\"CustomerId\",\"toAttribute\":\"CustomerId\"}]}}"
+							}
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
+					},
+					{
+						"ActionType": "CREATE",
+						"OldEntity": null,
+						"NewEntity": {
+							"Namespace": {
+								"DatabaseName": "Retail_pab"
+							},
+							"Name": "relationship-vlqkurepdu",
+							"EntityType": "RELATIONSHIP",
+							"Origin": {
+								"Type": "SPARK"
+							},
+							"FromTableName": "Order",
+							"ToTableName": "Invoice",
+							"ColumnRelationshipInformations": [
+								{
+									"FromColumnName": "OrderId",
+									"ToColumnName": "OrderId"
+								}
+							],
+							"RelationshipType": 0,
+							"Properties": {
+								"DerivedModelRelationshipInfo": "{\"baseRelationship\":{\"fromEntity\":\"Order.cdm.json/Order\",\"toEntity\":\"Invoice.cdm.json/Invoice\",\"joinPairs\":[{\"fromAttribute\":\"OrderId\",\"toAttribute\":\"OrderId\"}]}}"
+							}
+						},
+						"Source": {
+							"Type": "SPARK"
+						}
 					}
 				]
 			},
