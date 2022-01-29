@@ -1,0 +1,24 @@
+{
+	"name": "Retail_pab",
+	"properties": {
+		"Description": "",
+		"Name": "Retail_pab",
+		"EntityType": "DATABASE",
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"Properties": {
+			"DerivedModelDBInfo": "{\"ModelDirectives\":{\"BaseModel\":{\"Name\":\"Retail\",\"Version\":\"0.1.0\"}}}",
+			"IsSyMSCDMDatabase": true
+		},
+		"Source": {
+			"Provider": "ADLS",
+			"Location": "abfss://dlseldpocfs1@eld5josugaup7tsipoc.dfs.core.windows.net/synapse/workspaces/eld5josugaup7tsipocws1/warehouse",
+			"Properties": {
+				"FormatType": "csv",
+				"LinkedServiceName": "eld5josugaup7tsipocws1-WorkspaceDefaultStorage"
+			}
+		}
+	},
+	"type": "DATABASE"
+}
